@@ -1,0 +1,15 @@
+{
+  "name": "landing-paid-media",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "Sistema de landings para paid media - Now Marketing Digital",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "astro": "^5.0.0"
+  }
+}

@@ -1,0 +1,101 @@
+---
+import Base from "../layouts/Base.astro";
+import { landing } from "../data/landing.js";
+
+const { marca } = landing;
+---
+
+<Base
+  titulo={`Gracias por tu consulta — ${marca.nombre}`}
+  descripcion="Hemos recibido tu consulta. Nuestro equipo se pondrá en contacto contigo en las próximas 24 horas."
+>
+  <main class="gracias">
+    <div class="container gracias__content">
+      <div class="gracias__icon" aria-hidden="true">
+        <svg viewBox="0 0 52 52" width="52" height="52">
+          <circle class="gracias__icon-circle" cx="26" cy="26" r="24" fill="none" />
+          <path class="gracias__icon-check" fill="none" d="M14 27l7 7 17-17" />
+        </svg>
+      </div>
+
+      <p class="eyebrow">Consulta recibida</p>
+      <h1>Gracias por tu consulta</h1>
+      <p class="muted gracias__texto">
+        Te estaremos contactando lo más rápido que podamos, dentro de las
+        próximas 24&nbsp;horas.
+      </p>
+
+      <a href="/" class="btn gracias__btn">Volver al inicio</a>
+    </div>
+  </main>
+</Base>
+
+<style>
+  .gracias {
+    min-height: 100svh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-block: var(--space-section);
+  }
+
+  .gracias__content {
+    max-width: 560px;
+    text-align: center;
+  }
+
+  .gracias__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 88px;
+    height: 88px;
+    border-radius: 50%;
+    background: var(--c-surface);
+    border: 1px solid var(--c-border);
+    margin-bottom: 1.8rem;
+  }
+
+  .gracias__icon-circle {
+    stroke: var(--c-primary);
+    stroke-width: 2;
+    stroke-dasharray: 151;
+    stroke-dashoffset: 151;
+    animation: gracias-circle 0.6s ease-out forwards;
+  }
+
+  .gracias__icon-check {
+    stroke: var(--c-primary);
+    stroke-width: 3;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-dasharray: 36;
+    stroke-dashoffset: 36;
+    animation: gracias-check 0.4s 0.5s ease-out forwards;
+  }
+
+  @keyframes gracias-circle {
+    to { stroke-dashoffset: 0; }
+  }
+
+  @keyframes gracias-check {
+    to { stroke-dashoffset: 0; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .gracias__icon-circle,
+    .gracias__icon-check {
+      animation: none;
+      stroke-dashoffset: 0;
+    }
+  }
+
+  h1 { margin-bottom: 1rem; }
+
+  .gracias__texto {
+    font-size: 1.15rem;
+    margin-bottom: 2.2rem;
+  }
+
+  .gracias__btn { padding: 0.85rem 1.8rem; }
+</style>

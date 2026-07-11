@@ -1,0 +1,17 @@
+---
+import { landing } from "../data/landing.js";
+const { contacto } = landing;
+---
+<section class="section" id="contacto">
+  <div class="container" style="max-width:560px;text-align:center;">
+    <h2 style="margin-bottom:0.8rem;">{contacto.titulo}</h2>
+    <p class="muted" style="margin-bottom:2.2rem;font-size:1.1rem;">{contacto.subtitulo}</p>
+    <form action={contacto.endpoint} method="POST" style="display:flex;flex-direction:column;gap:1rem;text-align:left;">
+      <input name="nombre" placeholder="Nombre" required style="padding:0.9rem 1rem;border-radius:var(--radius);border:1px solid var(--c-border);background:var(--c-surface);color:var(--c-text);font-size:1rem;" />
+      <input name="email" type="email" placeholder="Email de trabajo" required style="padding:0.9rem 1rem;border-radius:var(--radius);border:1px solid var(--c-border);background:var(--c-surface);color:var(--c-text);font-size:1rem;" />
+      <input name="empresa" placeholder="Empresa" style="padding:0.9rem 1rem;border-radius:var(--radius);border:1px solid var(--c-border);background:var(--c-surface);color:var(--c-text);font-size:1rem;" />
+      <button type="submit" class="btn" style="margin-top:0.5rem;">{contacto.botonTexto}</button>
+      <p class="muted" style="font-size:0.82rem;text-align:center;">{contacto.legal}</p>
+    </form>
+  </div>
+</section>

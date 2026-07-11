@@ -1,0 +1,12 @@
+---
+import { landing } from "../data/landing.js";
+const { footer } = landing;
+---
+<footer style="border-top:1px solid var(--c-border);padding-block:2.5rem;">
+  <div class="container" style="display:flex;flex-wrap:wrap;gap:1rem;justify-content:space-between;align-items:center;">
+    <p class="muted" style="font-size:0.9rem;">{footer.texto}</p>
+    <nav style="display:flex;gap:1.5rem;">
+      {footer.enlaces.map((e) => (<a href={e.url} class="muted" style="font-size:0.9rem;">{e.texto}</a>))}
+    </nav>
+  </div>
+</footer>

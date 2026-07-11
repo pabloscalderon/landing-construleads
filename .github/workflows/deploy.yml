@@ -1,0 +1,39 @@
+name: Deploy a Hostinger
+
+# Cada push a main: build de Astro + subida a Hostinger por SSH/rsync.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch: # permite lanzarlo a mano desde la pestaña Actions
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Instalar dependencias
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Subir a Hostinger por rsync
+        uses: burnett01/rsync-deployments@7.0.1
+        with:
+          # --delete borra en el server lo que ya no existe en /dist.
+          # Quítalo si compartes la carpeta con otros archivos.
+          switches: -avzr --delete
+          path: dist/
+          remote_path: ${{ secrets.HOSTINGER_PATH }}   # p.ej. /home/u123/domains/tudominio.com/public_html/
+          remote_host: ${{ secrets.HOSTINGER_HOST }}   # IP o host SSH de Hostinger
+          remote_port: ${{ secrets.HOSTINGER_PORT }}   # normalmente 65002
+          remote_user: ${{ secrets.HOSTINGER_USER }}   # tu usuario SSH (uXXXXXXX)
+          remote_key: ${{ secrets.HOSTINGER_SSH_KEY }} # clave privada SSH

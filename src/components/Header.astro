@@ -1,0 +1,12 @@
+---
+import { landing } from "../data/landing.js";
+const { marca, hero } = landing;
+---
+<header style="position:sticky;top:0;z-index:50;background:rgba(10,14,26,0.85);backdrop-filter:blur(10px);border-bottom:1px solid var(--c-border);">
+  <div class="container" style="display:flex;align-items:center;justify-content:space-between;padding-block:1rem;">
+    <span style="font-family:var(--font-display);font-weight:700;font-size:1.3rem;letter-spacing:0.05em;">
+      {marca.logoImagen ? <img src={marca.logoImagen} alt={marca.nombre} height="32" /> : marca.logoTexto}
+    </span>
+    <a href={hero.ctaAncla} class="btn" style="padding:0.6rem 1.2rem;font-size:0.95rem;">{hero.ctaTexto}</a>
+  </div>
+</header>
