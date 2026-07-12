@@ -5,18 +5,18 @@
 
 :root {
   /* --- Paleta --- */
-  --c-bg: #0a0e1a;            /* fondo principal (oscuro, alto contraste) */
-  --c-bg-alt: #111827;       /* secciones alternas */
-  --c-surface: #1a2236;      /* tarjetas */
+  --c-bg: #000000;            /* fondo principal (oscuro, alto contraste) */
+  --c-bg-alt: #0d0d0d;       /* secciones alternas */
+  --c-surface: #1a1a1a;      /* tarjetas */
   --c-text: #f4f6fb;         /* texto principal */
   --c-text-muted: #9aa6be;   /* texto secundario */
-  --c-primary: #1D9BEF;      /* acento de marca / CTA (cámbialo por tu color) */
-  --c-primary-hover: #4aaff2;
-  --c-border: #26304a;
+  --c-primary: #FFC700;      /* acento de marca / CTA (cámbialo por tu color) */
+  --c-primary-hover: #ffd633;
+  --c-border: #2a2a2a;
 
   /* --- Tipografía --- */
-  --font-display: "Space Grotesk", system-ui, sans-serif;
-  --font-body: "Inter", system-ui, -apple-system, sans-serif;
+  --font-display: "Poppins", system-ui, sans-serif;
+  --font-body: "Poppins", system-ui, -apple-system, sans-serif;
 
   /* --- Escala --- */
   --step-eyebrow: 0.8rem;
@@ -70,7 +70,7 @@ a { color: inherit; text-decoration: none; }
 .btn {
   display: inline-block;
   background: var(--c-primary);
-  color: #fff;
+  color: #000;
   font-weight: 600;
   font-family: var(--font-display);
   padding: 0.95rem 1.8rem;
