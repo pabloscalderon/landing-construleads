@@ -1,0 +1,41 @@
+---
+// Botón píldora con circulito blanco y flecha (→) al costado derecho.
+// variante: "violeta" (primario, sobre negro) | "verde" (sobre fondos violeta)
+interface Props {
+  texto: string;
+  url?: string;
+  variante?: "violeta" | "verde";
+  pequeno?: boolean;
+  tipo?: "button" | "submit";
+  clase?: string;
+}
+const {
+  texto,
+  url,
+  variante = "violeta",
+  pequeno = false,
+  tipo = "button",
+  clase = "",
+} = Astro.props as Props;
+
+const clases = ["btn", `btn--${variante}`, pequeno && "btn--pequeno", clase];
+---
+{url ? (
+  <a href={url} class:list={clases}>
+    <span>{texto}</span>
+    <span class="btn__icono" aria-hidden="true">
+      <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M3 8h10M9 4l4 4-4 4" />
+      </svg>
+    </span>
+  </a>
+) : (
+  <button type={tipo} class:list={clases}>
+    <span>{texto}</span>
+    <span class="btn__icono" aria-hidden="true">
+      <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M3 8h10M9 4l4 4-4 4" />
+      </svg>
+    </span>
+  </button>
+)}

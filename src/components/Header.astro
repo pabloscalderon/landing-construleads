@@ -1,12 +1,81 @@
 ---
 import { landing } from "../data/landing.js";
-const { marca, hero } = landing;
+import Boton from "./Boton.astro";
+
+const { marca, nav } = landing;
 ---
-<header style="position:sticky;top:0;z-index:50;background:rgba(10,14,26,0.85);backdrop-filter:blur(10px);border-bottom:1px solid var(--c-border);">
-  <div class="container" style="display:flex;align-items:center;justify-content:space-between;padding-block:1rem;">
-    <span style="font-family:var(--font-display);font-weight:700;font-size:1.3rem;letter-spacing:0.05em;">
-      {marca.logoImagen ? <img src={marca.logoImagen} alt={marca.nombre} height="32" /> : marca.logoTexto}
-    </span>
-    <a href={hero.ctaAncla} class="btn" style="padding:0.6rem 1.2rem;font-size:0.95rem;">{hero.ctaTexto}</a>
+<header class="fixed inset-x-0 top-0 z-50 px-4 pt-4 sm:px-6 sm:pt-5">
+  <div class="glass contenedor flex items-center justify-between gap-4 rounded-[999px] !py-2.5 !pl-5 !pr-2.5 sm:!pl-7">
+    <!-- Logo -->
+    <a href="#inicio" class="flex items-center gap-2 text-lg font-bold tracking-tight text-white sm:text-xl">
+      {marca.logoImagen
+        ? <img src={marca.logoImagen} alt={marca.nombre} height="28" class="h-7 w-auto" />
+        : <span>{marca.logoTexto}</span>}
+    </a>
+
+    <!-- Navegación (desktop) -->
+    <nav class="hidden items-center gap-7 lg:flex" aria-label="Navegación principal">
+      {nav.enlaces.map((e) => (
+        <a href={e.url} class="text-sm font-medium text-gris transition-colors hover:text-white">{e.texto}</a>
+      ))}
+    </nav>
+
+    <div class="flex items-center gap-2">
+      <div class="hidden sm:block">
+        <Boton texto={nav.cta.texto} url={nav.cta.url} variante="violeta" pequeno />
+      </div>
+
+      <!-- Botón menú (mobile) -->
+      <button
+        type="button"
+        id="menu-boton"
+        class="flex h-10 w-10 items-center justify-center rounded-full border border-white/15 text-white lg:hidden"
+        aria-expanded="false"
+        aria-controls="menu-mobile"
+        aria-label="Abrir menú"
+      >
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+          <path d="M4 7h16M4 12h16M4 17h16" />
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Panel de navegación mobile -->
+  <div id="menu-mobile" hidden class="contenedor mt-2 lg:hidden">
+    <nav class="glass flex flex-col gap-1 rounded-3xl p-4" aria-label="Navegación móvil">
+      {nav.enlaces.map((e) => (
+        <a href={e.url} class="rounded-xl px-3 py-2.5 text-base font-medium text-white/90 transition-colors hover:bg-white/5">{e.texto}</a>
+      ))}
+      <div class="mt-2 sm:hidden">
+        <Boton texto={nav.cta.texto} url={nav.cta.url} variante="violeta" pequeno />
+      </div>
+    </nav>
   </div>
 </header>
+
+<script>
+  const boton = document.getElementById("menu-boton");
+  const panel = document.getElementById("menu-mobile");
+
+  if (boton && panel) {
+    const cerrar = () => {
+      panel.hidden = true;
+      boton.setAttribute("aria-expanded", "false");
+      boton.setAttribute("aria-label", "Abrir menú");
+    };
+
+    boton.addEventListener("click", () => {
+      const abierto = !panel.hidden;
+      panel.hidden = abierto;
+      boton.setAttribute("aria-expanded", String(!abierto));
+      boton.setAttribute("aria-label", abierto ? "Abrir menú" : "Cerrar menú");
+    });
+
+    // Cerrar al elegir un enlace o al pasar a desktop.
+    panel.querySelectorAll("a").forEach((a) => a.addEventListener("click", cerrar));
+    window.matchMedia("(min-width: 1024px)").addEventListener("change", (e) => {
+      if (e.matches) cerrar();
+    });
+  }
+</script>

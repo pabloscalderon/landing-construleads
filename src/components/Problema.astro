@@ -1,0 +1,30 @@
+---
+import { landing } from "../data/landing.js";
+import Eyebrow from "./Eyebrow.astro";
+import Icono from "./Icono.astro";
+
+const { problema } = landing;
+---
+<section id="problema" class="fondo-violeta seccion relative overflow-hidden">
+  <div class="contenedor relative">
+    <div class="max-w-3xl">
+      <Eyebrow texto={problema.eyebrow} />
+      <h2 class="mt-5 text-white">{problema.titulo}</h2>
+      {problema.intro && <p class="mt-6 max-w-2xl text-base text-white/70 sm:text-lg">{problema.intro}</p>}
+    </div>
+
+    <hr class="linea mt-12" />
+
+    <div class="mt-12 grid gap-6 md:grid-cols-3">
+      {problema.items.map((item) => (
+        <article class="rounded-3xl border border-white/10 bg-black/25 p-7 transition-colors hover:border-violeta/45">
+          <span class="flex h-12 w-12 items-center justify-center rounded-2xl bg-violeta/15 text-violeta">
+            <Icono nombre={item.icono} />
+          </span>
+          <h3 class="mt-6 text-white">{item.titulo}</h3>
+          <p class="mt-3 text-sm text-white/65">{item.texto}</p>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>

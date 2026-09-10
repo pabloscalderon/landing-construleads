@@ -1,0 +1,32 @@
+---
+import { landing } from "../data/landing.js";
+import Eyebrow from "./Eyebrow.astro";
+import TestimonioCard from "./TestimonioCard.astro";
+
+const { pruebaSocial } = landing;
+const varios = pruebaSocial.testimonios.length > 1;
+---
+<section id="casos" class="seccion relative overflow-hidden border-t border-[color:var(--color-linea)]">
+  <div class="glow left-[-8rem] bottom-0 h-[18rem] w-[24rem]" aria-hidden="true"></div>
+
+  <div class="contenedor relative">
+    <div class="mx-auto flex max-w-3xl flex-col items-center text-center">
+      <Eyebrow texto={pruebaSocial.eyebrow} centrado />
+      <h2 class="mt-5 text-white">{pruebaSocial.titulo}</h2>
+    </div>
+
+    <div class:list={["mt-12 grid gap-6", varios ? "md:grid-cols-2" : "mx-auto max-w-3xl"]}>
+      {pruebaSocial.testimonios.map((t) => (
+        <TestimonioCard
+          cita={t.cita}
+          nombre={t.nombre}
+          cargo={t.cargo}
+          empresa={t.empresa}
+          logo={t.logo}
+          metricaValor={t.metricaValor}
+          metricaTexto={t.metricaTexto}
+        />
+      ))}
+    </div>
+  </div>
+</section>

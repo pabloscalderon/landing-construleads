@@ -18,21 +18,55 @@ const { titulo = meta.titulo, descripcion = meta.descripcion } = Astro.props as 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{titulo}</title>
     <meta name="description" content={descripcion} />
+    <meta name="theme-color" content="#000000" />
 
     <!-- Open Graph para previews al compartir el anuncio -->
     <meta property="og:title" content={titulo} />
     <meta property="og:description" content={descripcion} />
+    <meta property="og:site_name" content={marca.nombre} />
     <meta property="og:type" content="website" />
 
-    <!-- Fuentes (Poppins) -->
+    <!-- Tipografía: DM Sans -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&display=swap"
       rel="stylesheet"
     />
 
-    {/* ===== TRACKING — solo se inyecta si hay ID en landing.js ===== */}
+    {/*
+      ============================================================
+      TRACKING — PLACEHOLDERS
+      ------------------------------------------------------------
+      Los snippets de abajo se inyectan solos si cargás el ID en
+      src/data/landing.js > meta. Si preferís pegar el código tal
+      cual te lo da la plataforma, pegalo en el lugar marcado.
+
+      Eventos a disparar en esta landing:
+        · ViewContent → carga de página          (ya cableado abajo)
+        · Lead        → envío del formulario     (ver CtaFinal.astro)
+        · Schedule    → reunión agendada Clientify (ver CtaFinal.astro)
+
+      PENDIENTE DE INSTALAR:
+        1) META PIXEL + API DE CONVERSIONES (CAPI)
+           - Pixel de navegador: cargar metaPixelId en landing.js
+             o pegar acá el snippet de Events Manager.
+           - CAPI: la deduplicación necesita un event_id compartido
+             entre navegador y servidor. Enviar desde el servidor
+             (Conversions API Gateway / endpoint propio) los mismos
+             eventos ViewContent, Lead y Schedule con el mismo event_id.
+             >>> PEGAR ACÁ EL SNIPPET / CONFIG DE CAPI <<<
+        2) ETIQUETA DE GOOGLE ADS (gtag AW-XXXXXXXX)
+           - Cargar meta.gtagId + meta.gtagConversionLead /
+             meta.gtagConversionSchedule en landing.js.
+             >>> O PEGAR ACÁ LA ETIQUETA DE GOOGLE ADS <<<
+        3) GA4 (G-XXXXXXXXXX)
+           - Cargar meta.ga4Id en landing.js.
+             >>> O PEGAR ACÁ LA ETIQUETA DE GA4 <<<
+        4) GTM (opcional, si se centraliza todo en el contenedor)
+           - Cargar meta.gtmId en landing.js.
+      ============================================================
+    */}
 
     {meta.gtmId && (
       <script is:inline set:html={`
@@ -44,14 +78,15 @@ const { titulo = meta.titulo, descripcion = meta.descripcion } = Astro.props as 
       `} />
     )}
 
-    {meta.gtagId && (
+    {(meta.gtagId || meta.ga4Id) && (
       <>
-        <script is:inline async src={`https://www.googletagmanager.com/gtag/js?id=${meta.gtagId}`}></script>
+        <script is:inline async src={`https://www.googletagmanager.com/gtag/js?id=${meta.gtagId || meta.ga4Id}`}></script>
         <script is:inline set:html={`
           window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments);}
           gtag('js', new Date());
-          gtag('config', '${meta.gtagId}');
+          ${meta.gtagId ? `gtag('config', '${meta.gtagId}');` : ""}
+          ${meta.ga4Id ? `gtag('config', '${meta.ga4Id}');` : ""}
         `} />
       </>
     )}
@@ -66,6 +101,25 @@ const { titulo = meta.titulo, descripcion = meta.descripcion } = Astro.props as 
         fbq('init', '${meta.metaPixelId}'); fbq('track', 'PageView');
       `} />
     )}
+
+    {/* --- Helper de eventos: window.track('Lead', {...}) ---
+        Centraliza el disparo hacia dataLayer + fbq + gtag para no repetir
+        código en los componentes. Si instalás todo por GTM, alcanza con
+        escuchar los eventos del dataLayer. */}
+    <script is:inline set:html={`
+      window.dataLayer = window.dataLayer || [];
+      window.track = function (evento, datos) {
+        datos = datos || {};
+        // GTM / GA4 vía dataLayer
+        window.dataLayer.push(Object.assign({ event: evento }, datos));
+        // Meta Pixel (el mismo evento debe replicarse por CAPI con igual event_id)
+        if (typeof window.fbq === 'function') { window.fbq('track', evento, datos); }
+        // GA4 directo (si no se usa GTM)
+        if (typeof window.gtag === 'function') { window.gtag('event', evento, datos); }
+      };
+      // ViewContent — carga de página
+      window.track('ViewContent', { content_name: document.title });
+    `} />
   </head>
   <body>
     {meta.gtmId && (

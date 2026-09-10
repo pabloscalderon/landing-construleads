@@ -1,0 +1,16 @@
+---
+// Kicker de sección con el guion decorativo violeta (—•—) delante.
+interface Props {
+  texto: string;
+  centrado?: boolean;
+}
+const { texto, centrado = false } = Astro.props as Props;
+---
+<p class:list={["flex items-center gap-2.5 text-xs font-medium uppercase tracking-[0.18em] text-gris", centrado && "justify-center"]}>
+  <span aria-hidden="true" class="inline-flex items-center gap-1 text-violeta">
+    <span class="block h-px w-4 bg-violeta"></span>
+    <span class="block h-1 w-1 rounded-full bg-violeta"></span>
+    <span class="block h-px w-4 bg-violeta"></span>
+  </span>
+  <span>{texto}</span>
+</p>

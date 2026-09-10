@@ -1,5 +1,7 @@
 ---
 import Base from "../layouts/Base.astro";
+import Boton from "../components/Boton.astro";
+import Eyebrow from "../components/Eyebrow.astro";
 import { landing } from "../data/landing.js";
 
 const { marca } = landing;
@@ -7,95 +9,31 @@ const { marca } = landing;
 
 <Base
   titulo={`Gracias por tu consulta — ${marca.nombre}`}
-  descripcion="Hemos recibido tu consulta. Nuestro equipo se pondrá en contacto contigo en las próximas 24 horas."
+  descripcion="Recibimos tus datos. Te contactamos dentro de las próximas 24 horas."
 >
-  <main class="gracias">
-    <div class="container gracias__content">
-      <div class="gracias__icon" aria-hidden="true">
-        <svg viewBox="0 0 52 52" width="52" height="52">
-          <circle class="gracias__icon-circle" cx="26" cy="26" r="24" fill="none" />
-          <path class="gracias__icon-check" fill="none" d="M14 27l7 7 17-17" />
+  <main class="relative flex min-h-[100svh] items-center justify-center overflow-hidden py-24">
+    <div class="estrellas pointer-events-none absolute inset-0 opacity-60 [mask-image:radial-gradient(ellipse_60%_60%_at_50%_40%,#000_20%,transparent_100%)]" aria-hidden="true"></div>
+    <div class="glow left-1/2 top-1/4 h-[18rem] w-[28rem] -translate-x-1/2" aria-hidden="true"></div>
+
+    <div class="contenedor relative flex max-w-xl flex-col items-center text-center">
+      <span class="flex h-20 w-20 items-center justify-center rounded-full border border-violeta/40 bg-violeta/10 text-violeta">
+        <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M4.5 12.5l5 5 10-11" />
         </svg>
+      </span>
+
+      <div class="mt-8">
+        <Eyebrow texto="Consulta recibida" centrado />
       </div>
 
-      <p class="eyebrow">Consulta recibida</p>
-      <h1>Gracias por tu consulta</h1>
-      <p class="muted gracias__texto">
-        Te estaremos contactando lo más rápido que podamos, dentro de las
-        próximas 24&nbsp;horas.
+      <h1 class="mt-5 text-white">Gracias por tu consulta</h1>
+      <p class="mt-6 text-base text-white/70 sm:text-lg">
+        Te contactamos lo más rápido posible, dentro de las próximas 24&nbsp;horas.
       </p>
 
-      <a href="/" class="btn gracias__btn">Volver al inicio</a>
+      <div class="mt-9">
+        <Boton texto="Volver al inicio" url="/" variante="violeta" />
+      </div>
     </div>
   </main>
 </Base>
-
-<style>
-  .gracias {
-    min-height: 100svh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding-block: var(--space-section);
-  }
-
-  .gracias__content {
-    max-width: 560px;
-    text-align: center;
-  }
-
-  .gracias__icon {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 88px;
-    height: 88px;
-    border-radius: 50%;
-    background: var(--c-surface);
-    border: 1px solid var(--c-border);
-    margin-bottom: 1.8rem;
-  }
-
-  .gracias__icon-circle {
-    stroke: var(--c-primary);
-    stroke-width: 2;
-    stroke-dasharray: 151;
-    stroke-dashoffset: 151;
-    animation: gracias-circle 0.6s ease-out forwards;
-  }
-
-  .gracias__icon-check {
-    stroke: var(--c-primary);
-    stroke-width: 3;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-    stroke-dasharray: 36;
-    stroke-dashoffset: 36;
-    animation: gracias-check 0.4s 0.5s ease-out forwards;
-  }
-
-  @keyframes gracias-circle {
-    to { stroke-dashoffset: 0; }
-  }
-
-  @keyframes gracias-check {
-    to { stroke-dashoffset: 0; }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .gracias__icon-circle,
-    .gracias__icon-check {
-      animation: none;
-      stroke-dashoffset: 0;
-    }
-  }
-
-  h1 { margin-bottom: 1rem; }
-
-  .gracias__texto {
-    font-size: 1.15rem;
-    margin-bottom: 2.2rem;
-  }
-
-  .gracias__btn { padding: 0.85rem 1.8rem; }
-</style>

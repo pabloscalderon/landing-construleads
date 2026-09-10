@@ -1,0 +1,62 @@
+---
+// Tarjeta reutilizable de testimonio / mini caso de éxito.
+// Contenido real a definir: se edita en landing.js > pruebaSocial.testimonios
+interface Props {
+  cita: string;
+  nombre: string;
+  cargo?: string;
+  empresa?: string;
+  logo?: string;
+  metricaValor?: string;
+  metricaTexto?: string;
+}
+const {
+  cita,
+  nombre,
+  cargo = "",
+  empresa = "",
+  logo = "",
+  metricaValor = "",
+  metricaTexto = "",
+} = Astro.props as Props;
+
+const iniciales = nombre
+  .split(" ")
+  .filter(Boolean)
+  .slice(0, 2)
+  .map((p) => p[0])
+  .join("")
+  .toUpperCase();
+---
+<article class="relative flex h-full flex-col gap-7 rounded-3xl border border-white/10 bg-white/[0.03] p-8 sm:p-10">
+  <!-- Logo de la empresa (o el nombre como respaldo) -->
+  <div class="flex items-center justify-between gap-4">
+    {logo
+      ? <img src={logo} alt={empresa} class="h-7 w-auto opacity-80" />
+      : <span class="text-sm font-medium tracking-wide text-gris">{empresa}</span>}
+    <svg width="30" height="24" viewBox="0 0 30 24" fill="currentColor" class="text-violeta/50" aria-hidden="true">
+      <path d="M0 24V13.7C0 6.4 3.9 1.8 11.4 0l1.4 4.3c-4.4 1.3-6.6 3.9-6.6 7.7H12V24H0Zm18 0V13.7C18 6.4 21.9 1.8 29.4 0l1.4 4.3c-4.4 1.3-6.6 3.9-6.6 7.7H30V24H18Z" />
+    </svg>
+  </div>
+
+  <blockquote class="text-lg leading-snug font-medium text-white sm:text-xl">“{cita}”</blockquote>
+
+  <div class="mt-auto flex flex-wrap items-center justify-between gap-6">
+    <div class="flex items-center gap-3">
+      <span class="flex h-11 w-11 items-center justify-center rounded-full bg-violeta/20 text-sm font-bold text-violeta">{iniciales}</span>
+      <span class="leading-tight">
+        <span class="block text-sm font-bold text-white">{nombre}</span>
+        {(cargo || empresa) && (
+          <span class="block text-sm text-gris">{[cargo, empresa].filter(Boolean).join(" · ")}</span>
+        )}
+      </span>
+    </div>
+
+    {metricaValor && (
+      <div class="text-right">
+        <span class="block text-2xl font-bold leading-none text-violeta">{metricaValor}</span>
+        {metricaTexto && <span class="block text-xs text-gris">{metricaTexto}</span>}
+      </div>
+    )}
+  </div>
+</article>

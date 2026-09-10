@@ -1,0 +1,52 @@
+---
+import { landing } from "../data/landing.js";
+import Eyebrow from "./Eyebrow.astro";
+
+const { faq } = landing;
+---
+<!-- Tono burdeos/negro: transición antes del cierre -->
+<section id="faq" class="fondo-burdeos seccion relative overflow-hidden">
+  <div class="contenedor relative">
+    <div class="grid gap-12 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16">
+      <div class="lg:sticky lg:top-32 lg:self-start">
+        <Eyebrow texto={faq.eyebrow} />
+        <h2 class="mt-5 text-violeta">{faq.titulo}</h2>
+      </div>
+
+      <!-- Acordeón: <details> nativo + JS mínimo para abrir de a uno -->
+      <div class="faq-lista flex flex-col">
+        {faq.items.map((item, i) => (
+          <details class="faq-item group border-b border-white/10" open={i === 0}>
+            <summary class="flex cursor-pointer list-none items-center justify-between gap-6 py-5 text-left text-base font-bold text-white transition-colors hover:text-violeta sm:text-lg">
+              <span>{item.pregunta}</span>
+              <span class="flex h-8 w-8 flex-none items-center justify-center rounded-full border border-violeta/40 text-violeta transition-transform duration-200 group-open:rotate-45" aria-hidden="true">
+                <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                  <path d="M8 3v10M3 8h10" />
+                </svg>
+              </span>
+            </summary>
+            <p class="pb-6 pr-12 text-sm text-white/65 sm:text-base">{item.respuesta}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Oculta el triángulo por defecto en Safari */
+  .faq-item summary::-webkit-details-marker { display: none; }
+</style>
+
+<script>
+  // Acordeón: al abrir una pregunta se cierran las demás.
+  const items = document.querySelectorAll<HTMLDetailsElement>(".faq-lista .faq-item");
+  items.forEach((item) => {
+    item.addEventListener("toggle", () => {
+      if (!item.open) return;
+      items.forEach((otro) => {
+        if (otro !== item) otro.open = false;
+      });
+    });
+  });
+</script>

@@ -1,5 +1,6 @@
 // @ts-check
 import { defineConfig } from "astro/config";
+import tailwindcss from "@tailwindcss/vite";
 
 export default defineConfig({
   // Cambia esto por el dominio final de cada landing.
@@ -10,5 +11,8 @@ export default defineConfig({
   build: {
     // Inlinea CSS pequeño para que la landing cargue en 1 solo request.
     inlineStylesheets: "auto",
+  },
+  vite: {
+    plugins: [tailwindcss()],
   },
 });
