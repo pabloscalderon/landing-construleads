@@ -8,7 +8,7 @@ const { hero } = landing;
 <section id="inicio" class="relative overflow-hidden pt-36 pb-20 sm:pt-44 sm:pb-28">
   <!-- Textura de partículas / estrellas sobre el negro -->
   <div class="estrellas pointer-events-none absolute inset-0 opacity-70 [mask-image:radial-gradient(ellipse_70%_60%_at_50%_35%,#000_20%,transparent_100%)]" aria-hidden="true"></div>
-  <!-- Glow violeta -->
+  <!-- Glow del acento -->
   <div class="glow left-1/2 top-[-8rem] h-[22rem] w-[34rem] -translate-x-1/2" aria-hidden="true"></div>
 
   <div class="contenedor relative">
@@ -17,16 +17,16 @@ const { hero } = landing;
 
       <h1 class="mt-6 text-balance">
         <span class="block text-white">{hero.tituloBlanco}</span>
-        <span class="mt-2 block text-violeta">{hero.tituloDestacado}</span>
+        <span class="mt-2 block text-primario">{hero.tituloDestacado}</span>
       </h1>
 
       <p class="mt-7 max-w-2xl text-base text-white/70 sm:text-lg">{hero.subtitulo}</p>
 
       <div class="mt-9">
-        <Boton texto={hero.cta.texto} url={hero.cta.url} variante="violeta" />
+        <Boton texto={hero.cta.texto} url={hero.cta.url} variante="primario" />
       </div>
 
-      {hero.nota && <p class="mt-5 text-sm text-gris">{hero.nota}</p>}
+      {hero.nota && <p class="mt-5 text-sm text-suave">{hero.nota}</p>}
     </div>
   </div>
 </section>

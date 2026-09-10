@@ -1,34 +1,35 @@
 /* ============================================================
    tokens.css — Tokens de diseño + capa base de Tailwind.
    Cambia los valores de marca aquí y toda la landing se actualiza.
+   Los nombres son por ROL (primario, suave, degradado…), nunca por color,
+   para que sirvan igual con cualquier paleta de cliente.
    ============================================================ */
 
 @import "tailwindcss";
 
 /* --- Tokens de marca (se exponen como utilidades de Tailwind) ---
-   p.ej. --color-violeta  ->  bg-violeta / text-violeta / border-violeta */
+   p.ej. --color-primario  ->  bg-primario / text-primario / border-primario */
 @theme {
   /* Paleta */
-  --color-negro: #000000;
-  --color-violeta: #a234fd;        /* primario: CTAs, acentos, glow */
-  --color-violeta-claro: #b869ff;  /* hover del primario */
-  --color-violeta-noche: #1a0b2e;  /* inicio del degradé de sección */
-  --color-violeta-profundo: #3d1a5c; /* fin del degradé de sección */
-  --color-burdeos: #1a0508;        /* transición antes del cierre */
-  --color-verde: #00ff3b;          /* secundario: agendar reunión / WhatsApp */
-  --color-verde-claro: #5cff85;
-  --color-gris: #716f73;           /* navegación y texto secundario */
-  --color-linea: rgba(162, 52, 253, 0.18); /* líneas divisorias finas */
+  --color-fondo: #000000;          /* fondo principal */
+  --color-fondo-alt: #0d0d0d;      /* secciones alternas */
+  --color-superficie: #141418;     /* tarjetas */
+  --color-primario: #ffc700;       /* acento de marca: CTAs, iconos, glow */
+  --color-primario-hover: #ffd633;
+  --color-suave: #9aa6be;          /* navegación y texto secundario */
+  --color-degradado-a: #14141c;    /* inicio del degradé de sección */
+  --color-degradado-b: #2b2b3d;    /* fin del degradé de sección */
+  --color-transicion: #0a0a0d;     /* sección de transición antes del cierre */
 
   /* Tipografía */
-  --font-sans: "DM Sans", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-sans: "Poppins", ui-sans-serif, system-ui, -apple-system, sans-serif;
 
-  /* Escala tipográfica (B2B: igual de bold, más sobria) */
-  --text-h1: clamp(2.25rem, 5.2vw, 3.75rem); /* 36px -> 60px */
-  --text-h2: clamp(1.75rem, 3.8vw, 3rem);    /* 28px -> 48px */
+  /* Escala tipográfica */
+  --text-h1: clamp(2.25rem, 5.2vw, 3.75rem);
+  --text-h2: clamp(1.75rem, 3.8vw, 3rem);
   --text-h3: clamp(1.15rem, 1.6vw, 1.45rem);
 
-  /* Radios y espaciado */
+  /* Radios */
   --radius-arco: 2.5rem;  /* esquinas superiores tipo arco */
   --radius-pill: 999px;
 }
@@ -41,7 +42,7 @@
   }
 
   body {
-    background-color: var(--color-negro);
+    background-color: var(--color-fondo);
     color: #ffffff;
     font-family: var(--font-sans);
     font-weight: 400;
@@ -64,7 +65,7 @@
   a { color: inherit; text-decoration: none; }
 
   :focus-visible {
-    outline: 3px solid var(--color-violeta);
+    outline: 3px solid var(--color-primario);
     outline-offset: 3px;
     border-radius: 4px;
   }
@@ -94,33 +95,33 @@
     border: none;
     cursor: pointer;
     transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+    /* colores del circulito de la flecha; cada variante los redefine */
+    --btn-icono-fondo: #ffffff;
+    --btn-icono-texto: #000000;
   }
-  .btn:hover {
-    transform: scale(1.03);
-  }
+  .btn:hover { transform: scale(1.03); }
 
-  /* Primario: violeta sobre fondo negro */
-  .btn--violeta {
-    background-color: var(--color-violeta);
-    color: #ffffff;
-    box-shadow: 0 0 0 rgba(162, 52, 253, 0);
-  }
-  .btn--violeta:hover {
-    background-color: var(--color-violeta-claro);
-    box-shadow: 0 8px 34px rgba(162, 52, 253, 0.45);
-  }
-
-  /* Secundario: verde neón con texto negro (sobre fondos violeta) */
-  .btn--verde {
-    background-color: var(--color-verde);
+  /* Primario: acento de marca sobre el fondo oscuro */
+  .btn--primario {
+    background-color: var(--color-primario);
     color: #000000;
   }
-  .btn--verde:hover {
-    background-color: var(--color-verde-claro);
-    box-shadow: 0 8px 34px rgba(0, 255, 59, 0.35);
+  .btn--primario:hover {
+    background-color: var(--color-primario-hover);
+    box-shadow: 0 8px 34px color-mix(in srgb, var(--color-primario) 45%, transparent);
   }
 
-  /* Circulito blanco con la flecha, pegado al costado derecho */
+  /* Claro: para fondos saturados donde el primario no contrasta
+     (p.ej. la sección de cierre con degradé). */
+  .btn--claro {
+    background-color: #ffffff;
+    color: #000000;
+    --btn-icono-fondo: #000000;
+    --btn-icono-texto: #ffffff;
+  }
+  .btn--claro:hover { box-shadow: 0 8px 34px rgba(255, 255, 255, 0.28); }
+
+  /* Circulito con la flecha, pegado al costado derecho */
   .btn__icono {
     display: inline-flex;
     align-items: center;
@@ -128,8 +129,8 @@
     width: 2.15rem;
     height: 2.15rem;
     border-radius: 50%;
-    background-color: #ffffff;
-    color: #000000;
+    background-color: var(--btn-icono-fondo);
+    color: var(--btn-icono-texto);
     font-size: 1rem;
     flex: none;
     transition: transform 0.2s ease;
@@ -140,11 +141,13 @@
 
   /* --- Nav flotante con efecto glass --- */
   .glass {
-    background-color: rgba(10, 6, 16, 0.6);
+    background-color: rgba(10, 10, 14, 0.65);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
-    border: 1px solid rgba(162, 52, 253, 0.28);
-    box-shadow: 0 0 30px rgba(162, 52, 253, 0.14), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    border: 1px solid color-mix(in srgb, var(--color-primario) 28%, transparent);
+    box-shadow:
+      0 0 30px color-mix(in srgb, var(--color-primario) 14%, transparent),
+      inset 0 1px 0 rgba(255, 255, 255, 0.05);
   }
 
   /* --- Contenedor tipo arco (esquinas superiores muy redondeadas) --- */
@@ -154,38 +157,50 @@
   }
 
   /* --- Fondos de sección --- */
-  .fondo-violeta {
-    background-image: linear-gradient(135deg, var(--color-violeta-noche) 0%, var(--color-violeta-profundo) 100%);
+  .fondo-degradado {
+    background-image: linear-gradient(135deg, var(--color-degradado-a) 0%, var(--color-degradado-b) 100%);
   }
-  .fondo-burdeos { background-color: var(--color-burdeos); }
+  .fondo-transicion { background-color: var(--color-transicion); }
 
-  /* --- Textura de partículas / estrellas sobre el negro --- */
+  /* --- Textura de partículas / estrellas sobre el fondo --- */
   .estrellas {
     background-image:
       radial-gradient(1.6px 1.6px at 12% 18%, rgba(255, 255, 255, 0.55) 50%, transparent 51%),
       radial-gradient(1.2px 1.2px at 27% 62%, rgba(255, 255, 255, 0.35) 50%, transparent 51%),
-      radial-gradient(1.8px 1.8px at 41% 28%, rgba(162, 52, 253, 0.65) 50%, transparent 51%),
+      radial-gradient(1.8px 1.8px at 41% 28%, color-mix(in srgb, var(--color-primario) 65%, transparent) 50%, transparent 51%),
       radial-gradient(1.2px 1.2px at 58% 74%, rgba(255, 255, 255, 0.4) 50%, transparent 51%),
       radial-gradient(1.5px 1.5px at 71% 22%, rgba(255, 255, 255, 0.45) 50%, transparent 51%),
-      radial-gradient(1.3px 1.3px at 84% 58%, rgba(162, 52, 253, 0.55) 50%, transparent 51%),
+      radial-gradient(1.3px 1.3px at 84% 58%, color-mix(in srgb, var(--color-primario) 55%, transparent) 50%, transparent 51%),
       radial-gradient(1.1px 1.1px at 92% 34%, rgba(255, 255, 255, 0.35) 50%, transparent 51%),
       radial-gradient(1.4px 1.4px at 8% 84%, rgba(255, 255, 255, 0.3) 50%, transparent 51%);
     background-size: 620px 620px;
     background-repeat: repeat;
   }
 
-  /* --- Glow violeta detrás de imágenes / bloques --- */
+  /* --- Glow del acento detrás de imágenes / bloques --- */
   .glow {
     position: absolute;
     border-radius: 50%;
-    background-color: var(--color-violeta);
+    background-color: var(--color-primario);
     filter: blur(110px);
-    opacity: 0.28;
+    opacity: 0.22;
     pointer-events: none;
   }
 
   /* --- Línea divisoria fina --- */
-  .linea { height: 1px; background-color: var(--color-linea); border: 0; }
+  .linea {
+    height: 1px;
+    border: 0;
+    background-color: color-mix(in srgb, var(--color-primario) 18%, transparent);
+  }
+  .borde-linea { border-color: color-mix(in srgb, var(--color-primario) 18%, transparent); }
+
+  /* --- Ícono destacado (tríptico de la solución) --- */
+  .icono-destacado {
+    background-color: var(--color-primario);
+    color: #000000;
+    box-shadow: 0 10px 30px color-mix(in srgb, var(--color-primario) 35%, transparent);
+  }
 
   /* --- Campos de formulario --- */
   .campo {
@@ -199,13 +214,13 @@
     font-size: 1rem;
     transition: border-color 0.2s ease, box-shadow 0.2s ease;
   }
-  .campo::placeholder { color: var(--color-gris); }
+  .campo::placeholder { color: var(--color-suave); }
   .campo:focus {
     outline: none;
-    border-color: var(--color-violeta);
-    box-shadow: 0 0 0 3px rgba(162, 52, 253, 0.28);
+    border-color: var(--color-primario);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-primario) 28%, transparent);
   }
-  .campo option { background-color: #12071f; color: #ffffff; }
+  .campo option { background-color: var(--color-superficie); color: #ffffff; }
 }
 
 /* --- Accesibilidad --- */

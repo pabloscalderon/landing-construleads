@@ -6,7 +6,7 @@ import Eyebrow from "./Eyebrow.astro";
 const { agendar } = landing;
 const { campos } = agendar;
 ---
-<section id="agendar" class="fondo-violeta relative overflow-hidden py-20 sm:py-28">
+<section id="agendar" class="fondo-degradado relative overflow-hidden py-20 sm:py-28">
   <div class="estrellas pointer-events-none absolute inset-0 opacity-40" aria-hidden="true"></div>
   <div class="glow left-1/2 top-[-6rem] h-[20rem] w-[36rem] -translate-x-1/2 opacity-40" aria-hidden="true"></div>
 
@@ -26,18 +26,25 @@ const { campos } = agendar;
         <p class="mt-2.5 text-sm text-white/65">{agendar.calendario.texto}</p>
       </div>
 
-      <!-- El widget de Clientify trae su propio tema claro: lo enmarcamos
-           en una tarjeta blanca para que se integre con el fondo violeta. -->
-      <div class="mt-6 overflow-hidden rounded-3xl bg-white p-3 shadow-[0_24px_60px_rgba(0,0,0,0.35)]">
-        <!-- El script monta el calendario EN SU PROPIA POSICIÓN, así que tiene
-             que quedar dentro de este contenedor. Si se saca de acá, el
-             calendario aparece al final de la página y a ancho completo. -->
-        <div id="clientify-calendar" class="min-h-[520px] rounded-2xl">
-          {agendar.calendario.scriptUrl && (
+      {agendar.calendario.scriptUrl ? (
+        /* El widget de calendario trae su propio tema claro: lo enmarcamos
+           en una tarjeta blanca para que se integre con el fondo de la sección. */
+        <div class="mt-6 overflow-hidden rounded-3xl bg-white p-3 shadow-[0_24px_60px_rgba(0,0,0,0.35)]">
+          {/* El script monta el calendario EN SU PROPIA POSICIÓN, así que tiene
+              que quedar dentro de este contenedor. Si se saca de acá, el
+              calendario aparece al final de la página y a ancho completo. */}
+          <div id="clientify-calendar" class="min-h-[520px] rounded-2xl">
             <script is:inline type="text/javascript" src={agendar.calendario.scriptUrl}></script>
-          )}
+          </div>
         </div>
-      </div>
+      ) : (
+        /* Sin scriptUrl cargado en landing.js: marcador, no un hueco en blanco. */
+        <div class="mt-6 flex min-h-[280px] items-center justify-center rounded-3xl border border-dashed border-white/20 bg-black/20 p-8 text-center">
+          <p class="text-sm text-suave">
+            Calendario de agendamiento — cargá el script en <code class="text-white/70">landing.js &gt; agendar.calendario.scriptUrl</code>
+          </p>
+        </div>
+      )}
     </div>
 
     <!-- ============================================================
@@ -73,11 +80,11 @@ const { campos } = agendar;
           <div class="grid gap-4 sm:grid-cols-2">
             <div class="flex flex-col gap-2">
               <label for="whatsapp" class="text-xs font-medium uppercase tracking-wider text-white/60">{campos.whatsapp}</label>
-              <input class="campo" type="tel" id="whatsapp" name="whatsapp" autocomplete="tel" placeholder="+54 9 11 0000 0000" required />
+              <input class="campo" type="tel" id="whatsapp" name="whatsapp" autocomplete="tel" placeholder={campos.whatsapp} required />
             </div>
             <div class="flex flex-col gap-2">
               <label for="cargo" class="text-xs font-medium uppercase tracking-wider text-white/60">{campos.cargo}</label>
-              <input class="campo" type="text" id="cargo" name="cargo" autocomplete="organization-title" placeholder="Gerente de tráfico" />
+              <input class="campo" type="text" id="cargo" name="cargo" autocomplete="organization-title" placeholder={campos.cargo} />
             </div>
           </div>
 
@@ -90,7 +97,7 @@ const { campos } = agendar;
           </div>
 
           <div class="mt-2">
-            <Boton texto={agendar.botonTexto} variante="verde" tipo="submit" />
+            <Boton texto={agendar.botonTexto} variante="claro" tipo="submit" />
           </div>
 
           <p class="text-xs text-white/50">{agendar.legal}</p>
@@ -115,7 +122,7 @@ const { campos } = agendar;
     // >>> Google Ads: gtag('event','conversion',{send_to: meta.gtagConversionLead})
     // >>> GA4: generate_lead
     window.track?.("Lead", {
-      content_name: "Formulario calificación viajes",
+      content_name: "Formulario de calificación",
       volumen: (document.getElementById("volumen") as HTMLSelectElement | null)?.value || "",
     });
   });

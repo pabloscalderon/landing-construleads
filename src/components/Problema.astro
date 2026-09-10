@@ -5,7 +5,7 @@ import Icono from "./Icono.astro";
 
 const { problema } = landing;
 ---
-<section id="problema" class="fondo-violeta seccion relative overflow-hidden">
+<section id="problema" class="fondo-degradado seccion relative overflow-hidden">
   <div class="contenedor relative">
     <div class="max-w-3xl">
       <Eyebrow texto={problema.eyebrow} />
@@ -17,8 +17,8 @@ const { problema } = landing;
 
     <div class="mt-12 grid gap-6 md:grid-cols-3">
       {problema.items.map((item) => (
-        <article class="rounded-3xl border border-white/10 bg-black/25 p-7 transition-colors hover:border-violeta/45">
-          <span class="flex h-12 w-12 items-center justify-center rounded-2xl bg-violeta/15 text-violeta">
+        <article class="rounded-3xl border border-white/10 bg-black/25 p-7 transition-colors hover:border-primario/45">
+          <span class="flex h-12 w-12 items-center justify-center rounded-2xl bg-primario/15 text-primario">
             <Icono nombre={item.icono} />
           </span>
           <h3 class="mt-6 text-white">{item.titulo}</h3>

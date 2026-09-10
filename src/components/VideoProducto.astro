@@ -5,7 +5,7 @@ import Eyebrow from "./Eyebrow.astro";
 const { video } = landing;
 ---
 <section id="video" class="seccion relative overflow-hidden">
-  <!-- Glow violeta detrás del bloque de video -->
+  <!-- Glow del acento detrás del bloque de video -->
   <div class="glow left-1/2 top-1/3 h-[20rem] w-[40rem] -translate-x-1/2" aria-hidden="true"></div>
 
   <div class="contenedor relative">
@@ -40,12 +40,12 @@ const { video } = landing;
           /* PLACEHOLDER: cargá el video en landing.js > video.src (archivo propio
              en /public/video/) o video.iframeSrc (YouTube / Vimeo / Loom). */
           <div class="flex h-full w-full flex-col items-center justify-center gap-4 bg-[#0b0611] text-center">
-            <span class="flex h-16 w-16 items-center justify-center rounded-full bg-violeta/15 text-violeta">
+            <span class="flex h-16 w-16 items-center justify-center rounded-full bg-primario/15 text-primario">
               <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                 <path d="M8 5.5v13l11-6.5-11-6.5Z" />
               </svg>
             </span>
-            <p class="px-6 text-sm text-gris">
+            <p class="px-6 text-sm text-suave">
               Video de producto (60 a 90 s) — cargalo en <code class="text-white/70">landing.js &gt; video</code>
             </p>
           </div>

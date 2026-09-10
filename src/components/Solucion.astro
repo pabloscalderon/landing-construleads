@@ -17,11 +17,11 @@ const { solucion, nav } = landing;
 
     <div class="mt-14 grid gap-6 md:grid-cols-3">
       {solucion.items.map((item, i) => (
-        <article class="group relative flex flex-col rounded-3xl border border-white/10 bg-gradient-to-b from-white/[0.06] to-transparent p-8 transition-colors hover:border-violeta/50">
-          <span class="flex h-14 w-14 items-center justify-center rounded-2xl bg-violeta text-white shadow-[0_10px_30px_rgba(162,52,253,0.35)]">
+        <article class="group relative flex flex-col rounded-3xl border border-white/10 bg-gradient-to-b from-white/[0.06] to-transparent p-8 transition-colors hover:border-primario/50">
+          <span class="flex h-14 w-14 items-center justify-center rounded-2xl icono-destacado">
             <Icono nombre={item.icono} clase="h-7 w-7" />
           </span>
-          <span class="mt-7 text-xs font-medium tracking-[0.18em] text-gris">0{i + 1}</span>
+          <span class="mt-7 text-xs font-medium tracking-[0.18em] text-suave">0{i + 1}</span>
           <h3 class="mt-2 text-white">{item.titulo}</h3>
           <p class="mt-3 text-sm text-white/65">{item.texto}</p>
         </article>
@@ -29,7 +29,7 @@ const { solucion, nav } = landing;
     </div>
 
     <div class="mt-12 flex justify-center">
-      <Boton texto={nav.cta.texto} url={nav.cta.url} variante="violeta" />
+      <Boton texto={nav.cta.texto} url={nav.cta.url} variante="primario" />
     </div>
   </div>
 </section>

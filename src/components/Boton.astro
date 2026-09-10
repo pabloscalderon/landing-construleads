@@ -1,10 +1,11 @@
 ---
 // Botón píldora con circulito blanco y flecha (→) al costado derecho.
-// variante: "violeta" (primario, sobre negro) | "verde" (sobre fondos violeta)
+// variante: "primario" (acento de marca) | "claro" (para fondos saturados,
+// p.ej. la sección de cierre con degradé, donde el primario no contrasta)
 interface Props {
   texto: string;
   url?: string;
-  variante?: "violeta" | "verde";
+  variante?: "primario" | "claro";
   pequeno?: boolean;
   tipo?: "button" | "submit";
   clase?: string;
@@ -12,7 +13,7 @@ interface Props {
 const {
   texto,
   url,
-  variante = "violeta",
+  variante = "primario",
   pequeno = false,
   tipo = "button",
   clase = "",
