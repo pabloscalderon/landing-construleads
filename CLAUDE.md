@@ -39,9 +39,16 @@ dispara a dataLayer + fbq + gtag a la vez. Eventos de esta landing:
 Los lugares de instalación de Meta CAPI, Google Ads y GA4 están marcados con
 comentarios en `Base.astro` y `CtaFinal.astro`.
 
-El formulario y el calendario del cierre se conectan a **Clientify**
-(ver comentarios en `src/components/CtaFinal.astro`): el `<div id="clientify-calendar">`
-y el `<script src="…/meetings/script/v2/14950.js">` van pegados ahí.
+El cierre (`CtaFinal.astro`) se conecta a **Clientify** en dos bloques apilados:
+1. **Calendario** (opción principal). El script de Clientify va **dentro** del
+   `<div id="clientify-calendar">`, porque monta el widget en su propia posición:
+   si se saca de ahí, el calendario aparece al final de la página y a ancho
+   completo. La URL del script se edita en `landing.js > agendar.calendario.scriptUrl`
+   (vaciarla oculta el widget). El widget trae su propio tema claro, por eso va
+   enmarcado en una tarjeta blanca.
+2. **Formulario** de calificación, como alternativa para quien no encuentra
+   horario. Falta conectarlo al formulario nativo de Clientify (ver comentario
+   en el componente); no tiene lógica de envío propia.
 
 ## Convenciones de diseño
 - Fondo negro puro. Secciones de contraste: degradé violeta (`.fondo-violeta`)

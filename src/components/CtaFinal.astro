@@ -17,14 +17,42 @@ const { campos } = agendar;
       <p class="mt-6 max-w-xl text-base text-white/70 sm:text-lg">{agendar.subtitulo}</p>
     </div>
 
-    <div class="mx-auto mt-14 grid max-w-5xl gap-6 lg:grid-cols-2">
-      <!-- ============================================================
-           FORMULARIO DE CALIFICACIÓN
-           >>> CONECTAR ESTE FORMULARIO AL FORMULARIO NATIVO DE CLIENTIFY <<<
-           (pegar acá el embed/action del formulario de Clientify;
-            no hay lógica de envío propia implementada a propósito)
-           ============================================================ -->
-      <div class="rounded-3xl border border-white/12 bg-black/30 p-7 backdrop-blur-sm sm:p-9">
+    <!-- ============================================================
+         BLOQUE 1 — Agendar directo en el calendario (opción principal)
+         ============================================================ -->
+    <div class="mx-auto mt-14 max-w-4xl">
+      <div class="text-center">
+        <h3 class="text-2xl text-white">{agendar.calendario.titulo}</h3>
+        <p class="mt-2.5 text-sm text-white/65">{agendar.calendario.texto}</p>
+      </div>
+
+      <!-- El widget de Clientify trae su propio tema claro: lo enmarcamos
+           en una tarjeta blanca para que se integre con el fondo violeta. -->
+      <div class="mt-6 overflow-hidden rounded-3xl bg-white p-3 shadow-[0_24px_60px_rgba(0,0,0,0.35)]">
+        <!-- El script monta el calendario EN SU PROPIA POSICIÓN, así que tiene
+             que quedar dentro de este contenedor. Si se saca de acá, el
+             calendario aparece al final de la página y a ancho completo. -->
+        <div id="clientify-calendar" class="min-h-[520px] rounded-2xl">
+          {agendar.calendario.scriptUrl && (
+            <script is:inline type="text/javascript" src={agendar.calendario.scriptUrl}></script>
+          )}
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================================
+         BLOQUE 2 — Formulario de calificación (alternativa al calendario)
+         >>> CONECTAR ESTE FORMULARIO AL FORMULARIO NATIVO DE CLIENTIFY <<<
+         (pegar acá el embed/action del formulario de Clientify;
+          no hay lógica de envío propia implementada a propósito)
+         ============================================================ -->
+    <div class="mx-auto mt-16 max-w-xl">
+      <div class="text-center">
+        <h3 class="text-2xl text-white">{agendar.formulario.titulo}</h3>
+        <p class="mt-2.5 text-sm text-white/65">{agendar.formulario.texto}</p>
+      </div>
+
+      <div class="mt-6 rounded-3xl border border-white/12 bg-black/30 p-7 backdrop-blur-sm sm:p-9">
         <form id="form-calificacion" class="flex flex-col gap-4" novalidate>
           <div class="grid gap-4 sm:grid-cols-2">
             <div class="flex flex-col gap-2">
@@ -49,7 +77,7 @@ const { campos } = agendar;
             </div>
             <div class="flex flex-col gap-2">
               <label for="cargo" class="text-xs font-medium uppercase tracking-wider text-white/60">{campos.cargo}</label>
-              <input class="campo" type="text" id="cargo" name="cargo" autocomplete="organization-title" placeholder="Gerente de tráfico" required />
+              <input class="campo" type="text" id="cargo" name="cargo" autocomplete="organization-title" placeholder="Gerente de tráfico" />
             </div>
           </div>
 
@@ -68,24 +96,8 @@ const { campos } = agendar;
           <p class="text-xs text-white/50">{agendar.legal}</p>
         </form>
       </div>
-
-      <!-- ============================================================
-           CALENDARIO DE AGENDAMIENTO (Clientify)
-           ============================================================ -->
-      <div class="rounded-3xl border border-white/12 bg-black/30 p-7 backdrop-blur-sm sm:p-9">
-        <h3 class="text-white">{agendar.calendario.titulo}</h3>
-        <p class="mt-2 text-sm text-white/60">{agendar.calendario.texto}</p>
-
-        <!-- Contenedor donde Clientify monta el calendario -->
-        <div id="clientify-calendar" class="mt-6 min-h-[420px] rounded-2xl"></div>
-      </div>
     </div>
   </div>
-
-  <!-- ============================================================
-       SCRIPT DEL CALENDARIO DE CLIENTIFY — PEGAR TAL CUAL ACÁ:
-       <script type="text/javascript" src="https://app.clientify.com/meetings/script/v2/14950.js"></script>
-       ============================================================ -->
 </section>
 
 <script>

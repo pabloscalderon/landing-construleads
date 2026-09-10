@@ -207,9 +207,19 @@ export const landing = {
       "50 a 100",
       "Más de 100",
     ],
+    // Bloque 1 del cierre: el calendario (opción principal)
     calendario: {
       titulo: "Elegí tu horario",
-      texto: "Reunión de 30 minutos por videollamada.",
+      texto: "Reunión de 30 minutos por videollamada. Sin compromiso.",
+      // Script del widget de Clientify. Se inyecta DENTRO de #clientify-calendar,
+      // que es donde el script monta el calendario. Vaciar para ocultarlo.
+      scriptUrl: "https://app.clientify.com/meetings/script/v2/14950.js",
+    },
+    // Bloque 2 del cierre: el formulario, como alternativa al calendario
+    formulario: {
+      titulo: "¿Preferís que te contactemos?",
+      texto:
+        "Si no encontrás un horario que te sirva, dejanos tus datos y coordinamos por WhatsApp o correo.",
     },
   },
 
